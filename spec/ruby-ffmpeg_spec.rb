@@ -5,16 +5,16 @@ describe FFMPEG do
     after(:each) do
       FFMPEG.logger = Logger.new(nil)
     end
-    
+
     it "should be a Logger" do
       expect(FFMPEG.logger).to be_instance_of(Logger)
     end
-    
+
     it "should be at info level" do
       FFMPEG.logger = nil # Reset the logger so that we get the default
       expect(FFMPEG.logger.level).to eq(Logger::INFO)
     end
-    
+
     it "should be assignable" do
       new_logger = Logger.new(STDOUT)
       FFMPEG.logger = new_logger
@@ -24,7 +24,7 @@ describe FFMPEG do
 
   describe '.ffmpeg_binary' do
 
-    after(:each) do
+    before(:each) do
       FFMPEG.ffmpeg_binary = nil
     end
 

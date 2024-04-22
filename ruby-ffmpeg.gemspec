@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = FFMPEG::VERSION
   s.authors     = ["Andbeav"]
   s.email       = []
-  s.homepage    = "http://github.com/streamio/ruby-ffmpeg"
+  s.homepage    = "https://github.com/Andbeav/ruby-ffmpeg"
   s.summary     = "Wraps ffmpeg to read metadata and transcodes videos."
 
   s.add_dependency('multi_json', '~> 1.15')

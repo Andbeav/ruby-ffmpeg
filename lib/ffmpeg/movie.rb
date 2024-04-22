@@ -93,11 +93,14 @@ module FFMPEG
 
           @video_stream = "#{video_stream[:codec_name]} (#{video_stream[:profile]}) (#{video_stream[:codec_tag_string]} / #{video_stream[:codec_tag]}), #{colorspace}, #{resolution} [SAR #{sar} DAR #{dar}]"
 
-          @rotation = if video_stream.key?(:tags) and video_stream[:tags].key?(:rotate)
-                        video_stream[:tags][:rotate].to_i
-                      else
-                        nil
-                      end
+          @rotation = nil
+          if video_stream.key?(:side_data_list)
+            display_matrix = video_stream[:side_data_list].select {|data| data[:side_data_type] == 'Display Matrix'}.pop
+
+            unless display_matrix.nil? || !display_matrix.key?(:rotation)
+              @rotation = display_matrix[:rotation].to_i.abs
+            end
+          end
         end
 
         @audio_streams = audio_streams.map do |stream|
