@@ -1,0 +1,14 @@
+services:
+  workspace:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    entrypoint: /bin/sh
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./coverage:/ruby-ffmpeg/coverage
+    command: bundle exec rspec spec
