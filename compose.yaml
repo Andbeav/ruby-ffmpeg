@@ -6,11 +6,3 @@ services:
     volumes:
       - .:/ruby-ffmpeg
     entrypoint: /bin/sh
-
-  test:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - ./coverage:/ruby-ffmpeg/coverage
-    command: bundle exec rspec spec

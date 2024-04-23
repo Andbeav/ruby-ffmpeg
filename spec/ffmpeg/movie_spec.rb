@@ -152,7 +152,7 @@ module FFMPEG
         let(:movie) { Movie.new("#{fixture_path}/movies/ios_rotate90.mov") }
 
         it "should have correct rotation detected" do
-          expect(movie.rotation).to eq(90)
+          expect(movie.rotation).to eq(-90)
         end
 
         it "should have switched width and height" do
@@ -165,7 +165,7 @@ module FFMPEG
         let(:movie) { Movie.new("#{fixture_path}/movies/ios_rotate180.mov") }
 
         it "should have correct rotation detected" do
-          expect(movie.rotation).to eq(180)
+          expect(movie.rotation).to eq(-180)
         end
         it "should have untouched width and height" do
           expect(movie.width).to eq(1920)
@@ -505,7 +505,7 @@ module FFMPEG
       let(:movie) { Movie.new("#{fixture_path}/movies/sideways movie.mov") }
 
       it "should parse the rotation" do
-        expect(movie.rotation).to eq(90)
+        expect(movie.rotation).to eq(-90)
       end
     end
 
