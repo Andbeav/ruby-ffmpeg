@@ -1,46 +1,7 @@
-Streamio FFMPEG
+Ruby FFMPEG
 ===============
 
-[![Build Status](https://travis-ci.org/bikeath1337/streamio-ffmpeg.svg?branch=master)](https://travis-ci.org/bikeath1337/streamio-ffmpeg)
-[![Code Climate](https://codeclimate.com/github/bikeath1337/streamio-ffmpeg/badges/gpa.svg)](https://codeclimate.com/github/bikeath1337/streamio-ffmpeg)
-[![Test Coverage](https://codeclimate.com/github/bikeath1337/streamio-ffmpeg/badges/coverage.svg)](https://codeclimate.com/github/bikeath1337/streamio-ffmpeg/coverage)
-
-Simple yet powerful wrapper around the ffmpeg command for reading metadata and transcoding movies.
-
-All work on this project is sponsored by the online video platform [Streamio](https://streamio.com) from [Rackfish](https://www.rackfish.com).
-
-[![Streamio](http://d253c4ja9jigvu.cloudfront.net/assets/small-logo.png)](https://streamio.com)
-
-Installation
-------------
-
-    gem install streamio-ffmpeg
-
-Compatibility
--------------
-
-### Ruby
-
-Only guaranteed to work with MRI Ruby 1.9.3 or later.
-Should work with rubinius head in 1.9 mode.
-Will not work in jruby until they fix: http://goo.gl/Z4UcX (should work in the upcoming 1.7.5)
-
-### ffmpeg
-
-The current gem is tested against ffmpeg 2.8.4. So no guarantees with earlier (or much later) 
-versions. Output and input standards have inconveniently changed rather a lot between versions 
-of ffmpeg. My goal is to keep this library in sync with new versions of ffmpeg as they come along.
-
-On macOS: `brew install ffmpeg`.
-
-Usage
------
-
-### Require the gem
-
-``` ruby
-require 'streamio-ffmpeg'
-```
+> Forked from [Streamio FFMPEG](https://github.com/streamio/streamio-ffmpeg) and updated to Ruby 3.3
 
 ### Reading Metadata
 
@@ -281,8 +242,3 @@ attempting to open a (possibly) invalid output file might result in an error bei
 transcoder_options = { validate: false }
 movie.transcode("movie.mp4", options, transcoder_options) # returns nil
 ```
-
-Copyright
----------
-
-Copyright (c) Rackfish AB. See LICENSE for details.

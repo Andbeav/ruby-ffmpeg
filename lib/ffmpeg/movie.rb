@@ -93,11 +93,14 @@ module FFMPEG
 
           @video_stream = "#{video_stream[:codec_name]} (#{video_stream[:profile]}) (#{video_stream[:codec_tag_string]} / #{video_stream[:codec_tag]}), #{colorspace}, #{resolution} [SAR #{sar} DAR #{dar}]"
 
-          @rotation = if video_stream.key?(:tags) and video_stream[:tags].key?(:rotate)
-                        video_stream[:tags][:rotate].to_i
-                      else
-                        nil
-                      end
+          @rotation = nil
+          if video_stream.key?(:side_data_list)
+            display_matrix = video_stream[:side_data_list].select {|data| data[:side_data_type] == 'Display Matrix'}.pop
+
+            unless display_matrix.nil? || !display_matrix.key?(:rotation)
+              @rotation = display_matrix[:rotation].to_i
+            end
+          end
         end
 
         @audio_streams = audio_streams.map do |stream|
@@ -156,11 +159,11 @@ module FFMPEG
     end
 
     def width
-      rotation.nil? || rotation == 180 ? @width : @height;
+      rotation.nil? || rotation.abs == 180 ? @width : @height;
     end
 
     def height
-      rotation.nil? || rotation == 180 ? @height : @width;
+      rotation.nil? || rotation.abs == 180 ? @height : @width;
     end
 
     def resolution
@@ -220,7 +223,7 @@ module FFMPEG
       return nil unless ratio
       w, h = ratio.split(':')
       return nil if w == '0' || h == '0'
-      @rotation.nil? || (@rotation == 180) ? (w.to_f / h.to_f) : (h.to_f / w.to_f)
+      @rotation.nil? || (@rotation.abs == 180) ? (w.to_f / h.to_f) : (h.to_f / w.to_f)
     end
 
     def aspect_from_dimensions

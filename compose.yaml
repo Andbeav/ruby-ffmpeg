@@ -1,0 +1,8 @@
+services:
+  workspace:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/ruby-ffmpeg
+    entrypoint: /bin/sh
