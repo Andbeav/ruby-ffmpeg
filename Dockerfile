@@ -1,4 +1,4 @@
-FROM ruby:3.3-alpine as base
+FROM ruby:3.3.1-alpine as base
 
 RUN apk add build-base ffmpeg
 
