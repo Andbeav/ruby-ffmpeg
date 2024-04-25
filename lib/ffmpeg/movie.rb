@@ -8,6 +8,7 @@ module FFMPEG
     attr_reader :path, :duration, :time, :bitrate, :rotation, :creation_time
     attr_reader :video_stream, :video_codec, :video_bitrate, :colorspace, :width, :height, :sar, :dar, :frame_rate
     attr_reader :audio_streams, :audio_stream, :audio_codec, :audio_bitrate, :audio_sample_rate, :audio_channels, :audio_tags
+    attr_reader :subtitle_streams, :subtitle_stream, :subtitle_codec, :subtitle_language
     attr_reader :container
     attr_reader :metadata, :format_tags
 
@@ -53,6 +54,7 @@ module FFMPEG
       else
         video_streams = @metadata[:streams].select { |stream| stream.key?(:codec_type) and stream[:codec_type] === 'video' }
         audio_streams = @metadata[:streams].select { |stream| stream.key?(:codec_type) and stream[:codec_type] === 'audio' }
+        subtitle_streams = @metadata[:streams].select { |stream| stream.key?(:codec_type) and stream[:codec_type] === 'subtitle' }
 
         @container = @metadata[:format][:format_name]
 
@@ -62,15 +64,13 @@ module FFMPEG
 
         @format_tags = @metadata[:format][:tags]
 
-        @creation_time = if @format_tags and @format_tags.key?(:creation_time)
-                           begin
-                             Time.parse(@format_tags[:creation_time])
-                           rescue ArgumentError
-                             nil
-                           end
-                         else
-                           nil
-                         end
+        @creation_time = nil
+        if @format_tags and @format_tags.key?(:creation_time)
+          begin
+            @creation_time = Time.parse(@format_tags[:creation_time])
+          rescue ArgumentError
+          end
+        end
 
         @bitrate = @metadata[:format][:bit_rate].to_i
 
@@ -125,6 +125,22 @@ module FFMPEG
           @audio_channel_layout = audio_stream[:channel_layout]
           @audio_tags = audio_stream[:audio_tags]
           @audio_stream = audio_stream[:overview]
+        end
+
+        @subtitle_streams = subtitle_streams.map do |stream|
+          {
+            :index => stream[:index],
+            :language => stream[:tags][:language],
+            :codec_name => stream[:codec_tag_string],
+            :overview => "#{stream[:codec_tag_string]} (#{stream[:tags][:language]})"
+          }
+        end
+
+        subtitle_stream = @subtitle_streams.first
+        unless subtitle_stream.nil?
+          @subtitle_language = subtitle_stream[:language]
+          @subtitle_codec = subtitle_stream[:codec_name]
+          @subtitle_stream = subtitle_stream[:overview]
         end
 
       end
