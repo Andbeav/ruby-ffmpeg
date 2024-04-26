@@ -28,6 +28,13 @@ movie.audio_channels # 2
 # Multiple audio streams
 movie.audio_streams[0] # "aac, 44100 Hz, stereo, s16, 75 kb/s" (raw audio stream info)
 
+movie.subtitle_stream # "tx3g (eng)"
+movie.subtitle_codec # "tx3g"
+movie.subtitle_language # "eng"
+
+# Multiple subtitle streams
+movie.subtitle_streams[0][:overview] # "tx3g (eng)"
+
 movie.valid? # true (would be false if ffmpeg fails to read the movie)
 ```
 
