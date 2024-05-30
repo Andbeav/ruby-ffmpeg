@@ -28,9 +28,11 @@ movie.audio_channels # 2
 # Multiple audio streams
 movie.audio_streams[0] # "aac, 44100 Hz, stereo, s16, 75 kb/s" (raw audio stream info)
 
-movie.subtitle_stream # "tx3g (eng)"
-movie.subtitle_codec # "tx3g"
+movie.subtitle_stream # "mov_text / MOV text (tx3g / 0x67337874) (eng)"
+movie.subtitle_codec # "mov_text"
+movie.subtitle_codec_tag # "tx3g"
 movie.subtitle_language # "eng"
+movie.subtitle_tags # {:creation_time=>"2017-06-07T05:51:07.000000Z", :language=>"eng" ...
 
 # Multiple subtitle streams
 movie.subtitle_streams[0][:overview] # "tx3g (eng)"

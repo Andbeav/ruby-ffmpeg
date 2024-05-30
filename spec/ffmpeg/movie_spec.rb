@@ -529,9 +529,19 @@ module FFMPEG
         expect(movie.subtitle_codec).to eq(subtitle_codec)
       end
 
+      it "should assign subtitle_codec_tag to the format of the first stream" do
+        subtitle_codec_tag = movie.subtitle_streams[0][:codec_tag]
+        expect(movie.subtitle_codec_tag).to eq(subtitle_codec_tag)
+      end
+
       it "should assign subtitle_language to the language of the first stream" do
         subtitle_language = movie.subtitle_streams[0][:language]
         expect(movie.subtitle_language).to eq(subtitle_language)
+      end
+
+      it "should assign subtitle_tags to the tags of the first stream" do
+        subtitle_tags = movie.subtitle_streams[0][:tags]
+        expect(movie.subtitle_tags).to eq(subtitle_tags)
       end
 
       it "should assign subtitle_stream to the properties of the first stream" do

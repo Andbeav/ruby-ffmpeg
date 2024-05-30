@@ -8,7 +8,7 @@ module FFMPEG
     attr_reader :path, :duration, :time, :bitrate, :rotation, :creation_time
     attr_reader :video_stream, :video_codec, :video_bitrate, :colorspace, :width, :height, :sar, :dar, :frame_rate
     attr_reader :audio_streams, :audio_stream, :audio_codec, :audio_bitrate, :audio_sample_rate, :audio_channels, :audio_tags
-    attr_reader :subtitle_streams, :subtitle_stream, :subtitle_codec, :subtitle_language
+    attr_reader :subtitle_streams, :subtitle_stream, :subtitle_codec, :subtitle_language, :subtitle_codec_tag, :subtitle_tags
     attr_reader :container
     attr_reader :metadata, :format_tags
 
@@ -131,15 +131,22 @@ module FFMPEG
           {
             :index => stream[:index],
             :language => stream[:tags][:language],
-            :codec_name => stream[:codec_tag_string],
-            :overview => "#{stream[:codec_tag_string]} (#{stream[:tags][:language]})"
+            :default => stream[:disposition][:default] == 1,
+            :codec_name => stream[:codec_name],
+            :codec_tag => stream[:codec_tag_string],
+            :tags => stream[:tags],
+            :overview => "#{stream[:codec_name]} / #{stream[:codec_long_name]} "\
+                         "(#{stream[:codec_tag_string]} / #{stream[:codec_tag]}) "\
+                         "(#{stream[:tags][:language]})"
           }
         end
 
-        subtitle_stream = @subtitle_streams.first
+        subtitle_stream = @subtitle_streams.select {|stream| stream[:default] }.first || @subtitle_streams.first
         unless subtitle_stream.nil?
           @subtitle_language = subtitle_stream[:language]
           @subtitle_codec = subtitle_stream[:codec_name]
+          @subtitle_codec_tag = subtitle_stream[:codec_tag]
+          @subtitle_tags = subtitle_stream[:tags]
           @subtitle_stream = subtitle_stream[:overview]
         end
 
