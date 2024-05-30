@@ -1,12 +1,21 @@
 == Master
 
-Current with 1.1.0
+Current with 1.2.0
+
+== 1.2.0
+
+Changes:
+* Added `subtitle_tags` and `subtitle_codec_tag` movie attributes
+
+Improvements:
+* Default subtitle stream now determined by disposition metadata. If no default is present, uses first stream.
+* Improved subtitle overview including both sets of codec names and codec tags
 
 == 1.1.0
 
 Improvements:
 * Added support for reading subtitle metadata
-* Running on ruby patch 3.1.1
+* Running on ruby patch 3.3.1
 
 == 1.0.0-r3.3 2024-04-23
 
