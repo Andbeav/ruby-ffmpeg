@@ -1,7 +1,7 @@
 Ruby FFMPEG
 ===============
 
-> Forked from [Streamio FFMPEG](https://github.com/streamio/streamio-ffmpeg) and updated to Ruby 3.3
+> Forked from [Streamio FFMPEG](https://github.com/streamio/streamio-ffmpeg) and running on Ruby 3.4.4
 
 ### Reading Metadata
 
